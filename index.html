@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penthouse Residence — Art SQR / Limassol</title>
+<meta name="description" content="The penthouse residence is the signature residence of Art SQR. A private home above the city — 200 m² indoors, 50 m² of verandas, a 127 m² roof garden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wine:#6E1F2C;
+  --ink:#16100F;
+  --coal:#100B0C;
+  --ivory:#F1EBE2;
+  --ivory-soft:#E5DDD0;
+  --greige:#C9BFB2;
+  --stone:#8F8275;
+  --brass:#B08D57;
+  --hair:rgba(241,235,226,.18);
+  --display:'Marcellus',serif;
+  --body:'Jost',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:var(--coal);color:var(--ivory);font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--display);font-weight:400}
+.tcaps{font-size:10px;letter-spacing:.32em;text-transform:uppercase}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+/* ───────── chrome ───────── */
+.bar{
+  position:fixed;inset:0 0 auto 0;z-index:90;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:22px clamp(20px,4vw,52px);pointer-events:none;
+}
+.bar>*{pointer-events:auto}
+.brand{font-family:var(--display);font-size:18px;letter-spacing:.3em;text-indent:.3em}
+.brand span{color:var(--brass)}
+.tag{
+  text-align:right;font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--greige);line-height:1.9;
+}
+.tag b{display:block;font-weight:400;color:var(--ivory)}
+
+.mini-nav{
+  position:fixed;left:clamp(20px,4vw,52px);bottom:22px;z-index:90;
+  display:flex;gap:26px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(241,235,226,.4);
+}
+.mini-nav span{transition:color .4s}
+.mini-nav span.on{color:var(--ivory)}
+.corner-cta{
+  position:fixed;right:clamp(20px,4vw,52px);bottom:22px;z-index:90;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ivory);
+  border-bottom:1px solid rgba(176,141,87,.7);padding-bottom:6px;
+  transition:color .35s,border-color .35s;
+}
+.corner-cta:hover{color:var(--brass)}
+
+/* ───────── meandering line ───────── */
+#journey{
+  position:absolute;top:0;left:0;width:100%;z-index:25;pointer-events:none;
+}
+#journey path.ghost{fill:none;stroke:rgba(241,235,226,.10);stroke-width:1.4}
+#journey path.live{fill:none;stroke:var(--brass);stroke-width:1.4;stroke-linecap:round}
+#journey circle{fill:var(--coal);stroke:rgba(241,235,226,.35);stroke-width:1.2;r:3.6;transition:fill .5s,stroke .5s}
+#journey circle.lit{fill:var(--brass);stroke:var(--brass)}
+#journey text{
+  font-family:var(--body);font-size:9px;letter-spacing:.3em;
+  fill:var(--stone);text-transform:uppercase;
+}
+
+/* ───────── the sequence stage ───────── */
+#film{position:relative}
+.stage{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--coal)}
+#seq{position:absolute;inset:0;width:100%;height:100%}
+.layer{position:absolute;inset:0;visibility:hidden;opacity:0}
+.layer .ph{position:absolute;inset:0;overflow:hidden}
+.layer .ph img{width:100%;height:100%;object-fit:cover;will-change:transform,filter}
+.shade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top, rgba(16,11,12,.55) 0%, rgba(16,11,12,.05) 34%, rgba(16,11,12,0) 55%)}
+
+/* project block — FLH style title, top-left */
+.project{
+  position:absolute;left:clamp(22px,5vw,72px);top:clamp(86px,15vh,150px);z-index:40;max-width:640px;
+  text-shadow:0 1px 26px rgba(0,0,0,.5);
+}
+.project .pre{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--greige);margin-bottom:18px}
+.project .pre b{font-weight:400;color:var(--brass)}
+.project h1{font-size:clamp(40px,6.4vw,86px);line-height:1.02;letter-spacing:.06em;text-transform:uppercase}
+.project .sub{margin-top:16px;font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--stone)}
+.project .specs{
+  margin-top:34px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--greige);line-height:2.5;
+}
+.project .specs i{font-style:normal;color:var(--brass);margin-right:14px}
+.seq-state{
+  position:absolute;right:clamp(20px,4vw,52px);top:46%;z-index:40;text-align:right;
+  font-size:9px;letter-spacing:.34em;text-transform:uppercase;color:rgba(241,235,226,.55);line-height:2.2;
+}
+
+/* frosted room panel — THRESHOLD / WATER SIDE style */
+.panel{
+  position:absolute;left:clamp(22px,5vw,72px);top:50%;transform:translateY(-50%);z-index:40;
+  width:min(420px,82vw);padding:38px 36px 34px;
+  background:rgba(238,231,219,.86);color:var(--ink);
+  backdrop-filter:blur(10px) saturate(.95);-webkit-backdrop-filter:blur(10px) saturate(.95);
+  border:1px solid rgba(22,16,15,.08);
+}
+.panel .rm{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--wine);margin-bottom:16px}
+.panel h2{font-size:clamp(24px,2.6vw,34px);line-height:1.16;letter-spacing:.07em;text-transform:uppercase;color:var(--ink)}
+.panel .rule{height:1px;background:rgba(22,16,15,.16);margin:22px 0 18px}
+.panel ul{list-style:none}
+.panel li{
+  font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#4A3E3B;
+  padding:7px 0;display:flex;gap:14px;align-items:baseline;
+}
+.panel li::before{content:"+";color:var(--brass);font-weight:400}
+.panel .go{
+  margin-top:24px;display:inline-block;font-size:9px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--wine);border-bottom:1px solid rgba(110,31,44,.5);padding-bottom:5px;
+}
+/* room corner code, top-right under bar */
+.rcode{
+  position:absolute;right:clamp(20px,4vw,52px);top:clamp(86px,14vh,140px);z-index:40;text-align:right;
+  font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--ivory);line-height:2;
+  text-shadow:0 1px 18px rgba(0,0,0,.6);
+}
+.rcode small{display:block;font-size:9px;color:var(--stone);letter-spacing:.3em}
+
+/* ───────── below the film: technical sheet ───────── */
+section.sheet{background:var(--ink);padding:clamp(90px,13vh,150px) clamp(20px,5vw,72px);position:relative}
+.sheet .wrap{max-width:1180px;margin:0 auto;position:relative;z-index:30}
+.tbl div{flex-wrap:wrap}
+.sheet .sec-pre{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--brass);margin-bottom:24px}
+.sheet h2{font-size:clamp(26px,3.6vw,46px);letter-spacing:.08em;text-transform:uppercase;line-height:1.15}
+.sheet .lead{margin-top:22px;font-size:15px;line-height:1.8;letter-spacing:.04em;color:var(--greige);max-width:34em}
+.cols{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:start}
+.tbl{border-top:1px solid var(--hair);margin-top:8px}
+.tbl div{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:15px 0;border-bottom:1px solid var(--hair)}
+.tbl .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--stone)}
+.tbl .v{font-family:var(--display);font-size:clamp(15px,1.4vw,19px);letter-spacing:.08em;text-transform:uppercase;text-align:right}
+.tbl .v em{font-style:normal;color:var(--brass)}
+
+#plan{background:var(--coal);text-align:center}
+#plan .plan-wrap{max-width:1040px;margin:52px auto 0}
+#plan .legend{margin-top:28px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--stone)}
+
+#contact{background:var(--wine)}
+#contact h2{max-width:14em}
+#contact .lead{color:rgba(241,235,226,.9);font-style:italic}
+.cta-row{margin-top:44px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  padding:15px 28px;border:1px solid rgba(241,235,226,.55);
+  transition:background .35s,color .35s;
+}
+.btn:hover{background:var(--ivory);color:var(--wine)}
+.btn.solid{background:var(--ivory);color:var(--wine);border-color:var(--ivory)}
+.btn.solid:hover{background:transparent;color:var(--ivory)}
+
+footer{
+  background:#0C0708;padding:48px clamp(20px,5vw,72px);
+  display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  font-size:11px;letter-spacing:.16em;color:var(--stone);line-height:2.1;position:relative;z-index:30;
+}
+footer .f-brand{font-family:var(--display);font-size:17px;letter-spacing:.3em;color:var(--ivory)}
+footer a:hover{color:var(--ivory)}
+
+/* reduced motion / no JS */
+body.static .layer{position:relative;visibility:visible;opacity:1;height:100vh}
+body.static #seq, body.static #journey, body.static .seq-state, body.static .mini-nav{display:none}
+body.static .panel{transform:none;top:auto;bottom:8vh}
+
+@media (max-width:820px){
+  .cols{grid-template-columns:1fr;gap:44px}
+  .project h1{font-size:clamp(34px,9.5vw,54px)}
+  .project .specs{display:none}
+  .seq-state{display:none}
+  .panel{left:16px;right:16px;width:auto;top:auto;bottom:64px;transform:none;padding:26px 24px}
+  .mini-nav{display:none}
+  .rcode{top:auto;bottom:24px}
+  .corner-cta{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="brand" href="#film">ART <span>SQR</span></a>
+  <div class="tag"><b>C6-01 / Signature</b>Penthouse Residence<br>Limassol, Cyprus</div>
+</header>
+
+<nav class="mini-nav" id="miniNav" aria-hidden="true">
+  <span>Approach</span><span>Entrance</span><span>Living</span><span>Kitchen</span><span>Bedroom</span>
+</nav>
+<a class="corner-cta" id="cornerCta" href="#plan">View floor plan →</a>
+
+<svg id="journey" aria-hidden="true"></svg>
+
+<!-- ═════════ THE FILM ═════════ -->
+<section id="film" aria-label="Scroll-driven tour of the Penthouse Residence">
+  <div class="stage" id="stage">
+
+    <canvas id="seq"></canvas>
+
+    <!-- project title over the approach -->
+    <div class="project" id="project">
+      <p class="pre">Project — <b>Art SQR</b> / Central Limassol</p>
+      <h1>Penthouse<br>Residence</h1>
+      <p class="sub">Aerial approach · C6-01</p>
+      <div class="specs">
+        <div><i>250 m²</i> total — 200 m² indoor area</div>
+        <div><i>50 m²</i> veranda space · <i>127 m²</i> roof garden</div>
+        <div><i>04</i> bedrooms · <i>04</i> bathrooms · walk-in wardrobe</div>
+      </div>
+    </div>
+    <div class="seq-state" id="seqState">Descending<br>— scroll —</div>
+
+    <!-- rooms -->
+    <figure class="layer" data-name="Entrance">
+      <div class="ph"><img src="assets/study.jpg" alt="Entrance and study — desk by the window, herringbone floor"></div>
+      <div class="shade"></div>
+      <div class="rcode">RM-01 / Entrance<small>visible axis — living</small></div>
+      <aside class="panel">
+        <p class="rm">RM-01 — Level 6</p>
+        <h2>Entrance /<br>The Study</h2>
+        <div class="rule"></div>
+        <ul>
+          <li>Walk-in wardrobe at entry</li>
+          <li>Storage</li>
+          <li>Floor-to-ceiling windows</li>
+        </ul>
+        <span class="go">Walk on ↓</span>
+      </aside>
+    </figure>
+
+    <figure class="layer" data-name="Living room">
+      <div class="ph"><img src="assets/living.jpg" alt="Living room with verandas on two sides" loading="lazy"></div>
+      <div class="shade"></div>
+      <div class="rcode">RM-02 / Living<small>double aspect</small></div>
+      <aside class="panel">
+        <p class="rm">RM-02 — Level 6</p>
+        <h2>Living<br>Room</h2>
+        <div class="rule"></div>
+        <ul>
+          <li>200 m² — indoor area</li>
+          <li>Large verandas</li>
+          <li>Underfloor heating</li>
+        </ul>
+        <span class="go">Walk on ↓</span>
+      </aside>
+    </figure>
+
+    <figure class="layer" data-name="Kitchen">
+      <div class="ph"><img src="assets/kitchen.jpg" alt="Kitchen and dining with marble table" loading="lazy"></div>
+      <div class="shade"></div>
+      <div class="rcode">RM-03 / Kitchen<small>living / dining</small></div>
+      <aside class="panel">
+        <p class="rm">RM-03 — Level 6</p>
+        <h2>Kitchen /<br>Dining</h2>
+        <div class="rule"></div>
+        <ul>
+          <li>Open living / dining</li>
+          <li>VRF air conditioning</li>
+          <li>Energy Class A</li>
+        </ul>
+        <span class="go">Walk on ↓</span>
+      </aside>
+    </figure>
+
+    <figure class="layer" data-name="Bedroom">
+      <div class="ph"><img src="assets/master.jpg" alt="Master bedroom in walnut panelling" loading="lazy"></div>
+      <div class="shade"></div>
+      <div class="rcode">RM-04 / Master<small>night side</small></div>
+      <aside class="panel">
+        <p class="rm">RM-04 — Level 6</p>
+        <h2>Master<br>Bedroom</h2>
+        <div class="rule"></div>
+        <ul>
+          <li>Four bedrooms</li>
+          <li>Walk-in wardrobe</li>
+          <li>En-suite bathroom</li>
+        </ul>
+        <span class="go">The residence ↓</span>
+      </aside>
+    </figure>
+
+  </div>
+</section>
+
+<!-- ═════════ SHEET ═════════ -->
+<section class="sheet" id="residence">
+  <div class="wrap cols">
+    <div>
+      <p class="sec-pre">Penthouse Residence — C6-01</p>
+      <h2>A private home above the city</h2>
+      <p class="lead">The penthouse residence is the signature residence of Art SQR. A private home above the city, combining generous indoor space, large verandas and a roof garden.</p>
+      <p class="lead">Escape to your own sanctuary perched over the city: morning coffee with views of the Mediterranean, long evenings around the barbecue, and a private pool under open sky.</p>
+    </div>
+    <div class="tbl">
+      <div><span class="k">Indoor area</span><span class="v">200 <em>m²</em></span></div>
+      <div><span class="k">Veranda space</span><span class="v">50 <em>m²</em></span></div>
+      <div><span class="k">Roof garden</span><span class="v">127 <em>m²</em></span></div>
+      <div><span class="k">Bedrooms</span><span class="v">Four</span></div>
+      <div><span class="k">Bathrooms</span><span class="v">Four</span></div>
+      <div><span class="k">Wardrobe</span><span class="v">Walk-in</span></div>
+      <div><span class="k">Storage</span><span class="v">Included</span></div>
+      <div><span class="k">Parking</span><span class="v">Two <em>spaces</em></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sheet" id="comfort" style="background:var(--coal)">
+  <div class="wrap cols">
+    <div>
+      <p class="sec-pre">Engineered for effortless living</p>
+      <h2>Comfort you don't need to think about</h2>
+      <p class="lead">The best residential comfort is often invisible. Art SQR integrates efficient engineering systems that support everyday life quietly and reliably. From climate control to energy performance.</p>
+    </div>
+    <div class="tbl">
+      <div><span class="k">Underfloor heating</span><span class="v">Hydronic</span></div>
+      <div><span class="k">Air conditioning</span><span class="v">VRF <em>autonomous</em></span></div>
+      <div><span class="k">Solar &amp; PV panels</span><span class="v">Class A</span></div>
+      <div><span class="k">Glazing</span><span class="v">Floor-to-ceiling</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sheet" id="plan">
+  <div class="wrap">
+    <p class="sec-pre">The plan — Level 6</p>
+    <h2>Penthouse Residence</h2>
+    <div class="plan-wrap"><img src="assets/plan.jpg" alt="Penthouse floor plan — four bedrooms, living and dining, verandas on two sides" loading="lazy"></div>
+    <p class="legend">200 m² indoor · 50 m² verandas · 127 m² roof garden — plans and availability on request</p>
+  </div>
+</section>
+
+<section class="sheet" id="place" style="background:var(--ink)">
+  <div class="wrap cols">
+    <div>
+      <p class="sec-pre">Central Limassol, quietly connected</p>
+      <h2>The city works around your life</h2>
+      <p class="lead">Art SQR is located close to the city's everyday and cultural life. The historic centre, the seafront, parks, restaurants, schools and business destinations, all within reach.</p>
+    </div>
+    <div class="tbl">
+      <div><span class="k">Linear Park</span><span class="v">1 <em>min walk</em></span></div>
+      <div><span class="k">Limassol Old Town</span><span class="v">10 <em>min walk</em></span></div>
+      <div><span class="k">Marina &amp; Molos</span><span class="v">20 <em>min walk</em></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sheet" id="contact">
+  <div class="wrap">
+    <p class="sec-pre" style="color:rgba(241,235,226,.8)">Get in touch</p>
+    <h2>To arrange a private viewing or request further information, we would be glad to hear from you.</h2>
+    <div class="cta-row">
+      <a class="btn solid" href="https://wa.me/35797448882" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn" href="mailto:hello@art-sqr.cy?subject=Penthouse%20Residence">Request information</a>
+      <a class="btn" href="tel:+35797448882">+357 9744 8882</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="f-brand">ART SQR</div>
+    <div>Penthouse Residence · Limassol</div>
+  </div>
+  <div>
+    26 Panagioti Diomidous, Limassol 3020, Cyprus<br>
+    <a href="https://art-sqr.cy" target="_blank" rel="noopener">art-sqr.cy</a> · <a href="https://instagram.com/art.sqr.cy" target="_blank" rel="noopener">@art.sqr.cy</a>
+  </div>
+  <div>
+    Phone / WhatsApp: <a href="tel:+35797448882">+357 9744 8882</a><br>
+    Art by Millo — Francesco Camillo Giorgino
+  </div>
+</footer>
+
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !window.gsap){ document.body.classList.add('static'); return; }
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* journey-line state (declared early: the timeline's onUpdate touches it) */
+  let routeLive=null, routeLen=0, dots=[];
+
+  /* ── frame sequence ── */
+  const FRAMES = 121;
+  const pad = n => String(n).padStart(3,'0');
+  const srcs = Array.from({length:FRAMES},(_,i)=>'assets/seq/f_'+pad(i+1)+'.jpg');
+  const imgs = new Array(FRAMES);
+  const canvas = document.getElementById('seq');
+  const ctx = canvas.getContext('2d');
+  let cur = 0;
+
+  function size(){
+    canvas.width  = innerWidth  * devicePixelRatio;
+    canvas.height = innerHeight * devicePixelRatio;
+    draw(cur);
+  }
+  function draw(i){
+    cur = i;
+    // nearest loaded frame at or below i
+    let j = i; while (j>0 && !(imgs[j] && imgs[j].complete && imgs[j].naturalWidth)) j--;
+    const im = imgs[j]; if (!im || !im.complete || !im.naturalWidth) return;
+    const cw = canvas.width, ch = canvas.height;
+    const s = Math.max(cw/im.naturalWidth, ch/im.naturalHeight);
+    const w = im.naturalWidth*s, h = im.naturalHeight*s;
+    ctx.drawImage(im, (cw-w)/2, (ch-h)/2, w, h);
+  }
+  // priority-load first frame, then the rest
+  imgs[0] = new Image(); imgs[0].onload = ()=>draw(0); imgs[0].src = srcs[0];
+  let loaded = 1;
+  for (let i=1;i<FRAMES;i++){
+    imgs[i] = new Image();
+    imgs[i].onload = ()=>{ loaded++; if (Math.abs(i-cur)<3) draw(cur); };
+    imgs[i].src = srcs[i];
+  }
+  addEventListener('resize', size); size();
+
+  /* ── master timeline ── */
+  const layers = gsap.utils.toArray('#film .layer');
+  const VID = 2.2, HOLD = 1, T = .5;          // video units, room hold, transition window
+  const TOTAL = VID + layers.length*HOLD;
+  const navEls = document.querySelectorAll('#miniNav span');
+
+  const tl = gsap.timeline({
+    scrollTrigger:{
+      trigger:'#film', start:'top top',
+      end:'+=' + Math.round(TOTAL*105) + '%',
+      scrub:.5, pin:'#stage', anticipatePin:1,
+      onUpdate(self){
+        drawJourney(self);
+        const u = self.progress*TOTAL;
+        let idx = u < VID ? 0 : Math.min(layers.length, Math.floor(u - VID + 1));
+        navEls.forEach((n,i)=>n.classList.toggle('on', i===idx));
+      }
+    }
+  });
+
+  /* video scrub 0 → VID */
+  const f = {i:0};
+  tl.to(f, {i:FRAMES-1, ease:'none', duration:VID,
+            onUpdate:()=>draw(Math.round(f.i))}, 0);
+  tl.to('#project', {autoAlpha:0, y:-46, ease:'power1.in', duration:.5}, VID*.45);
+  tl.to('#seqState',{autoAlpha:0, duration:.2}, VID*.3);
+
+  /* hand over: crisp entrance still fades over the last frames */
+  layers.forEach((layer,i)=>{
+    const img   = layer.querySelector('.ph img');
+    const panel = layer.querySelector('.panel');
+    const code  = layer.querySelector('.rcode');
+    const t0 = VID + i*HOLD;
+
+    if (i===0){
+      tl.set(layer,{visibility:'visible', zIndex:5}, t0-.3);
+      tl.fromTo(layer,{opacity:0},{opacity:1, ease:'none', duration:.3}, t0-.3);
+      tl.fromTo(img,{scale:1.06,filter:'blur(0px) brightness(1)'},
+                    {scale:1.0,  filter:'blur(0px) brightness(1)', ease:'none', duration:HOLD}, t0);
+    } else {
+      /* walk-through-the-blur: incoming decelerates out of a zoom blur */
+      tl.set(layer,{visibility:'visible', opacity:1, zIndex:5+i}, t0-T);
+      tl.fromTo(img,
+        {scale:1.35, filter:'blur(22px) brightness(1.12)'},
+        {scale:1.04, filter:'blur(0px) brightness(1)', ease:'power2.out', duration:T}, t0-T);
+      tl.fromTo(layer,{opacity:0},{opacity:1, ease:'power1.in', duration:T*.55}, t0-T);
+      tl.to(img,{scale:1.0, ease:'none', duration:HOLD}, t0);
+    }
+
+    /* outgoing accelerates into the blur */
+    if (i<layers.length-1){
+      const nT = VID + (i+1)*HOLD;
+      tl.to(img,{scale:1.5, filter:'blur(18px) brightness(.55)', ease:'power2.in', duration:T}, nT-T);
+    }
+
+    /* panel + code */
+    tl.fromTo(panel,{autoAlpha:0, x:-44},{autoAlpha:1, x:0, ease:'power2.out', duration:.22}, t0+.06);
+    tl.fromTo(code,{autoAlpha:0},{autoAlpha:1, duration:.18}, t0+.1);
+    if (i<layers.length-1){
+      tl.to(panel,{autoAlpha:0, x:-30, ease:'power1.in', duration:.14}, t0+HOLD-.18);
+      tl.to(code,{autoAlpha:0, duration:.12}, t0+HOLD-.16);
+    }
+  });
+  tl.to({}, {duration:.3});
+
+  /* corner CTA swaps at the end of the film; project tag fades after the film */
+  ScrollTrigger.create({
+    trigger:'#residence', start:'top 60%',
+    onEnter:()=>gsap.to('.tag',{autoAlpha:0,duration:.3}),
+    onLeaveBack:()=>gsap.to('.tag',{autoAlpha:1,duration:.3})
+  });
+  ScrollTrigger.create({
+    trigger:'#contact', start:'top 80%',
+    onEnter:()=>{ cornerCta.textContent='Book a viewing →'; cornerCta.href='https://wa.me/35797448882'; },
+    onLeaveBack:()=>{ cornerCta.textContent='View floor plan →'; cornerCta.href='#plan'; }
+  });
+
+  /* ── the meandering journey line ── */
+  const J = document.getElementById('journey');
+  function buildJourney(){
+    const docH = document.documentElement.scrollHeight;
+    const W = innerWidth;
+    J.setAttribute('viewBox', `0 0 ${W} ${docH}`);
+    J.setAttribute('width', W); J.setAttribute('height', docH);
+    J.style.height = docH+'px';
+
+    /* meander: alternate sides every ~70vh */
+    const step = innerHeight*.7, n = Math.ceil(docH/step);
+    const xa = W*.085, xb = W*.915;
+    let dStr = `M ${W*.5} 0`;
+    let pts = [[W*.5,0]];
+    for (let k=1;k<=n;k++){
+      const y = Math.min(docH, k*step);
+      const x = (k%2 ? xa : xb);
+      const py = pts[pts.length-1][1];
+      dStr += ` C ${pts[pts.length-1][0]} ${py+(y-py)*.5}, ${x} ${y-(y-py)*.5}, ${x} ${y}`;
+      pts.push([x,y]);
+    }
+    /* stop markers: film stops + section tops */
+    const st = tl.scrollTrigger;
+    const marks = [];
+    const segY = u => st.start + (st.end-st.start)*(u/TOTAL) + innerHeight*.5;
+    marks.push({y:segY(VID*.5), code:'FLY-IN'});
+    layers.forEach((l,i)=>marks.push({y:segY(VID + i*HOLD + HOLD*.5), code:'RM-0'+(i+1)}));
+    ['residence','comfort','plan','place','contact'].forEach(id=>{
+      const el=document.getElementById(id);
+      if (el) marks.push({y:el.offsetTop + innerHeight*.45, code:''});
+    });
+
+    J.innerHTML = `<path class="ghost" d="${dStr}"/><path class="live" d="${dStr}"/>`;
+    routeLive = J.querySelector('.live');
+    routeLen = routeLive.getTotalLength();
+    routeLive.style.strokeDasharray = routeLen;
+    routeLive.style.strokeDashoffset = routeLen;
+
+    /* place dots on the path at given document-y */
+    const SAMPLES = 600; const table=[];
+    for (let s=0;s<=SAMPLES;s++){
+      const p = routeLive.getPointAtLength(routeLen*s/SAMPLES);
+      table.push(p);
+    }
+    dots=[];
+    marks.forEach(m=>{
+      let best=table[0], bl=0;
+      table.forEach((p,si)=>{ if (Math.abs(p.y-m.y)<Math.abs(best.y-m.y)){best=p; bl=routeLen*si/SAMPLES;} });
+      const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx',best.x); c.setAttribute('cy',best.y);
+      J.appendChild(c);
+      if (m.code){
+        const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+        const onLeft = best.x < W*.5;
+        t.setAttribute('x', best.x + (onLeft?14:-14));
+        t.setAttribute('y', best.y+3);
+        t.setAttribute('text-anchor', onLeft?'start':'end');
+        t.textContent = m.code;
+        J.appendChild(t);
+      }
+      dots.push({el:c, len:bl});
+    });
+    drawJourney();
+  }
+  function drawJourney(){
+    if (!routeLive) return;
+    const docH = document.documentElement.scrollHeight - innerHeight;
+    const p = Math.min(1, (scrollY + innerHeight*.55) / (docH + innerHeight*.55));
+    const drawn = routeLen*p;
+    routeLive.style.strokeDashoffset = routeLen - drawn;
+    dots.forEach(d=>d.el.classList.toggle('lit', d.len <= drawn));
+  }
+  addEventListener('scroll', ()=>drawJourney(), {passive:true});
+  addEventListener('resize', ()=>{ ScrollTrigger.refresh(); buildJourney(); });
+  requestAnimationFrame(()=>{ ScrollTrigger.refresh(); buildJourney(); });
+  addEventListener('load', ()=>{ ScrollTrigger.refresh(); buildJourney(); });
+
+  /* sheet reveals */
+  gsap.utils.toArray('.sheet .tbl div').forEach(el=>{
+    gsap.from(el,{opacity:0,y:22,duration:.7,ease:'power2.out',
+      scrollTrigger:{trigger:el,start:'top 92%'}});
+  });
+})();
+</script>
+</body>
+</html>
